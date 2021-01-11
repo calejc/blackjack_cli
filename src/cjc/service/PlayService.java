@@ -15,13 +15,13 @@ public class PlayService {
             userHand.clearHand();
             dealerHand.clearHand();
             initialDeal();
-            while(dealAnotherToUser()){
+            while(dealAnotherToUser() && handNotOver()){
                     deal(userHand);
-                }
-            while(!handOver()){
-                dealerHand.flipDealerCard();
+            }
+            dealerHand.flipDealerCard();
+            while(handNotOver()){
                 deal(dealerHand);
-                Thread.sleep(3000);
+                Thread.sleep(1500);
             }
             if (userHand.checkForBust()){
                 stdout(messageService.bustMessage("USER"));
@@ -39,8 +39,8 @@ public class PlayService {
 
     }
 
-    public Boolean handOver(){
-        return userHand.checkForBust() || userHand.checkForBlackjack() || dealerHand.checkForBlackjack() || dealerHand.checkForDealerStand() || dealerHand.checkForBust();
+    public Boolean handNotOver(){
+        return !userHand.checkForBust() && !userHand.checkForBlackjack() && !dealerHand.checkForBlackjack() && !dealerHand.checkForDealerStand() && !dealerHand.checkForBust();
     }
 
     public void deal(HandService hand){
