@@ -90,7 +90,6 @@ public class PlayService {
         postDealOutput();
     }
 
-
     public Boolean dealAnotherToUser(){
         if(!userHand.getHand().getBust() || !userHand.checkForBlackjack()){
             String userAction;
@@ -106,9 +105,6 @@ public class PlayService {
         }
     }
 
-    public Boolean dealAnotherToDealer(){
-        return !dealerHand.checkForBlackjack() || !dealerHand.checkForDealerStand() || !dealerHand.getHand().getBust();
-    }
 
     public void stdout(String message){
         // only for cleanliness

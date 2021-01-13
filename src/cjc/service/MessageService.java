@@ -11,7 +11,7 @@ public class MessageService {
     final String VERTICAL_LINE = "\u2502";
     final String HORIZONTAL_LINE = "\u2500";
     final String VERTICAL_DASHED = "\u254E";
-    private Map<String, String> corners = Map.of(
+    final Map<String, String> corners = Map.of(
             "rounded_upper_left", "\u256D",
             "rounded_upper_right", "\u256E",
             "rounded_bottom_left", "\u2570",
@@ -21,7 +21,7 @@ public class MessageService {
             "square_bottom_left", "\u2514",
             "square_bottom_right", "\u2518"
     );
-    private Map<String, String> suits = Map.of(
+    final Map<String, String> suits = Map.of(
             "Clubs", "\u2663",
             "Spades", "\u2660",
             "Hearts", "\u2665",
