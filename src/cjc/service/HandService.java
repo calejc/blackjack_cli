@@ -73,6 +73,7 @@ public class HandService {
         for (Card c : this.getHand().getCards()){
             c.setVisible(true);
         }
+        this.tally();
     }
 
     public void clearHand(){

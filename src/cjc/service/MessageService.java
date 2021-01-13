@@ -4,6 +4,7 @@ import cjc.model.Card;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MessageService {
 
@@ -73,11 +74,35 @@ public class MessageService {
 
 
     public String bustMessage(String player){
-        return messageBox(String.format("  %s BUSTS!!  ", player));
+        return "\n" + messageBox(String.format("  ::%s BUSTS::  ", player));
     }
 
     public String blackjackMessage(String player){
-        return messageBox(String.format("  %s BLACKJACK!!  ", player));
+        return "\n" + messageBox(String.format("  ::%s BLACKJACK::  ", player));
+    }
+
+    public String dealerVictoryMessage(){
+        List<String> dealerVictoryMessages = List.of(
+                "Dealer wins... try harder next time.",
+                "Again the dealer wins. How many times can this happen?!",
+                "The dealer takes your money again... ",
+                "You lose"
+            );
+        return "\n" + returnRandomMessage(dealerVictoryMessages);
+    }
+
+    public String userVictoryMessage(){
+        List<String> userVictoryMessages = List.of(
+                "You win!!",
+                "Congrats on finally beating the dealer..",
+                "Nice hand, try to do it again!"
+        );
+        return "\n" + returnRandomMessage(userVictoryMessages);
+    }
+
+    public String returnRandomMessage(List<String> messageList){
+        Random rand = new Random();
+        return messageList.get(rand.nextInt(messageList.size()));
     }
 
 

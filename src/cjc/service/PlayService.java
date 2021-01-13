@@ -1,6 +1,7 @@
 package cjc.service;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class PlayService {
 
@@ -15,27 +16,37 @@ public class PlayService {
             userHand.clearHand();
             dealerHand.clearHand();
             initialDeal();
-            while(dealAnotherToUser() && handNotOver()){
-                    deal(userHand);
+            while(handNotOver() && dealAnotherToUser()){
+                deal(userHand);
             }
             dealerHand.flipDealerCard();
             while(handNotOver()){
+                TimeUnit.SECONDS.sleep(1);
                 deal(dealerHand);
-                Thread.sleep(1500);
             }
-            if (userHand.checkForBust()){
-                stdout(messageService.bustMessage("USER"));
-            }
-            if (userHand.checkForBlackjack()){
-                stdout(messageService.blackjackMessage("USER"));
-            }
-            if (dealerHand.checkForBust()){
-                stdout(messageService.bustMessage("DEALER"));
-            }
-            if (dealerHand.checkForBlackjack()){
-                stdout(messageService.blackjackMessage("DEALER"));
-            }
+            handResult();
+
         } while(playAgain());
+
+    }
+
+    public void handResult(){
+        if (userHand.checkForBust()){
+            stdout(messageService.bustMessage("PLAYER"));
+        }
+        else if (userHand.checkForBlackjack()){
+            stdout(messageService.blackjackMessage("PLAYER"));
+        }
+        else if (dealerHand.checkForBust()){
+            stdout(messageService.bustMessage("DEALER"));
+        }
+        else if (dealerHand.checkForBlackjack()){
+            stdout(messageService.blackjackMessage("DEALER"));
+        } else if (dealerHand.getHand().getHandTotal() > userHand.getHand().getHandTotal()) {
+            stdout(messageService.dealerVictoryMessage());
+        } else if (dealerHand.getHand().getHandTotal() < userHand.getHand().getHandTotal()){
+            stdout(messageService.userVictoryMessage());
+        }
 
     }
 
@@ -53,13 +64,14 @@ public class PlayService {
         String playAgain;
         Scanner sc = new Scanner(System.in);
         do{
-            stdout("Another hand? (y/n): ");
+            stdout("\nAnother hand? (y/n): ");
             playAgain= sc.next();
         } while(!("y".equalsIgnoreCase(playAgain)) && !("n".equalsIgnoreCase(playAgain)));
         return "y".equalsIgnoreCase(playAgain);
     }
 
     public void postDealOutput(){
+        stdout("\n\n|==================================================================|");
         stdout(messageService.handHeader("DEALER", dealerHand));
         stdout(messageService.handAscii(dealerHand.getHand().getCards()));
         stdout("\n\n" + messageService.handHeader("USER", userHand));
