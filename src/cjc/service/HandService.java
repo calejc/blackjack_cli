@@ -11,18 +11,23 @@ public class HandService {
     private Hand hand = new Hand();
 
     public void tally(){
+        this.getHand().setHandTotal(determineHandTotal(this.getHand()));
+        this.getHand().setBust(this.checkForBust());
+        if (this.containsAce() && this.getHand().getBust()){
+            this.changeAceValue();
+            this.getHand().setHandTotal(determineHandTotal(this.getHand()));
+        }
+        this.getHand().setBust(this.checkForBust());
+    }
+
+    public Integer determineHandTotal(Hand h){
         Integer tmp = 0;
-        for (Card c : hand.getCards()){
+        for (Card c : h.getCards()){
             if (c.getVisible()){
                 tmp += c.getValue();
             }
         }
-        hand.setHandTotal(tmp);
-        hand.setBust(this.checkForBust());
-        if (this.containsAce() && this.hand.getBust()){
-            this.changeAceValue();
-        }
-        hand.setBust(this.checkForBust());
+        return tmp;
     }
 
     public void addToHand(Card card){

@@ -48,6 +48,8 @@ public class PlayService {
             stdout(messageService.dealerVictoryMessage());
         } else if (dealerHand.getHand().getHandTotal() < userHand.getHand().getHandTotal()){
             stdout(messageService.userVictoryMessage());
+        } else if (dealerHand.getHand().getHandTotal() == userHand.getHand().getHandTotal()){
+            stdout("\nPUSH");
         }
 
     }
