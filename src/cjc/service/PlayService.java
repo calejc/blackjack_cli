@@ -13,6 +13,7 @@ public class PlayService {
     public void play() throws InterruptedException {
         stdout(messageService.greetingMessage());
         do {
+            deckService.checkForReShuffle();
             userHand.clearHand();
             dealerHand.clearHand();
             initialDeal();
@@ -20,6 +21,7 @@ public class PlayService {
                 deal(userHand);
             }
             dealerHand.flipDealerCard();
+            postDealOutput();
             while(handNotOver()){
                 TimeUnit.SECONDS.sleep(1);
                 deal(dealerHand);

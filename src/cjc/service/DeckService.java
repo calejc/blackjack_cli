@@ -36,6 +36,7 @@ public class DeckService {
         deck.setCards(cards);
     }
 
+    // Deck should be re-shuffled after 75% of cards have been played
     public void checkForReShuffle(){
         if (deck.getCards().size() <= 52) {
             this.populateDeck();
@@ -48,11 +49,4 @@ public class DeckService {
         return c;
     }
 
-    public Deck getDeck() {
-        return deck;
-    }
-
-    public void setDeck(Deck deck) {
-        this.deck = deck;
-    }
 }
